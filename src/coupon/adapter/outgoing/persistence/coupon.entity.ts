@@ -9,7 +9,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 @Entity('coupon')
 export class CouponEntity {
   
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
   @Column({ name: 'coupon_type', nullable: false })
   couponType: CouponType;
