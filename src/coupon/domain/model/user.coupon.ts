@@ -114,4 +114,5 @@ export class UserCoupon {
   get version(): number {
     return this._version;
   }
+  
 }
