@@ -1,6 +1,7 @@
 import { CouponId } from "./coupon.id";
 import { CouponType } from "./coupon.type";
 import { CouponDiscount } from "./coupon.discount";
+import { IdGenerator } from "../gen/id.generator";
 
 export default class Coupon {
 
@@ -18,7 +19,7 @@ export default class Coupon {
     couponType: CouponType,
     discount: CouponDiscount,
   ): Coupon {
-    const id: CouponId = CouponId.of('sf');
+    const id: CouponId = CouponId.of(new IdGenerator().generateRandomId());
     return new Coupon(id, couponType, discount, null, null, null, null);
   }
 
