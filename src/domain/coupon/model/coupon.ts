@@ -1,7 +1,7 @@
 import { CouponId } from "./coupon.id";
 import { CouponType } from "./coupon.type";
 import { CouponDiscount } from "./coupon.discount";
-import { IdGenerator } from "../gen/id.generator";
+import { IdGenerator } from "../../gen/id.generator";
 
 export default class Coupon {
 

@@ -1,9 +1,9 @@
-import Coupon from "src/coupon/domain/model/Coupon";
-import { CouponId } from "src/coupon/domain/model/coupon.id";
-import { CouponType } from "src/coupon/domain/model/coupon.type";
-import { CouponDiscount } from "src/coupon/domain/model/coupon.discount";
-import { CouponDiscountType } from "src/coupon/domain/model/coupon.discount.type";
-import { CouponDiscountValue } from "src/coupon/domain/model/coupon.discount.value";
+import Coupon from "src/domain/coupon/model/coupon";
+import { CouponDiscount } from "src/domain/coupon/model/coupon.discount";
+import { CouponDiscountType } from "src/domain/coupon/model/coupon.discount.type";
+import { CouponDiscountValue } from "src/domain/coupon/model/coupon.discount.value";
+import { CouponId } from "src/domain/coupon/model/coupon.id";
+import { CouponType } from "src/domain/coupon/model/coupon.type";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
 
 @Entity('coupon')

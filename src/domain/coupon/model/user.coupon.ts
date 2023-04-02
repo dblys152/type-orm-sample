@@ -1,4 +1,4 @@
-import { IdGenerator } from "../gen/id.generator";
+import { IdGenerator } from "../../gen/id.generator";
 import { CouponId } from "./coupon.id";
 import { UserCouponId } from "./user.coupon.id";
 import { UserCouponPeriod } from "./user.coupon.period";
@@ -12,8 +12,8 @@ export class UserCoupon {
   private _couponId: CouponId;
   private _status: UserCouponStatus;
   private _period: UserCouponPeriod;
-  private _createdAt: Date;
-  private _modifiedAt: Date;
+  private _createdAt: string;
+  private _modifiedAt: string;
   private _version: number;
   
   private constructor(
@@ -22,8 +22,8 @@ export class UserCoupon {
     couponId: CouponId,
     status: UserCouponStatus,
     period: UserCouponPeriod,
-    createdAt: Date | null,
-    modifiedAt: Date | null,
+    createdAt: string | null,
+    modifiedAt: string | null,
     version: number | null
   ) {
     this._id = id;
@@ -51,8 +51,8 @@ export class UserCoupon {
     couponId: CouponId,
     status: UserCouponStatus,
     period: UserCouponPeriod,
-    createdAt: Date | null,
-    modifiedAt: Date | null,
+    createdAt: string | null,
+    modifiedAt: string | null,
     version: number | null
   ): UserCoupon {
     return new UserCoupon(id, userId, couponId, status, period, createdAt, modifiedAt, version);
@@ -72,7 +72,7 @@ export class UserCoupon {
     this._status = UserCouponStatus.TERMINATED;
   }
 
-  public expired() {
+  public expire() {
     if (!this.isAvailable()) {
       throw new Error('AVAILABLE 상태에서만 만료 가능합니다.');
     }
@@ -103,11 +103,11 @@ export class UserCoupon {
     return this._period;
   }
   
-  get createdAt(): Date {
+  get createdAt(): string {
     return this._createdAt;
   }
   
-  get modifiedAt(): Date {
+  get modifiedAt(): string {
     return this._modifiedAt;
   }
   

@@ -1,10 +1,12 @@
-import { CouponId } from "src/coupon/domain/model/coupon.id";
+import * as moment from "moment-timezone";
+import { CouponId } from "src/domain/coupon/model/coupon.id";
+import { UserCoupon } from "src/domain/coupon/model/user.coupon";
+import { UserCouponId } from "src/domain/coupon/model/user.coupon.id";
+import { UserCouponPeriod } from "src/domain/coupon/model/user.coupon.period";
+import { UserCouponStatus } from "src/domain/coupon/model/user.coupon.status";
+import { UserId } from "src/domain/coupon/model/user.id";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
-import { UserCoupon } from "src/coupon/domain/model/user.coupon";
-import { UserCouponPeriod } from "src/coupon/domain/model/user.coupon.period";
-import { UserCouponId } from "src/coupon/domain/model/user.coupon.id";
-import { UserId } from "src/coupon/domain/model/user.id";
-import { UserCouponStatus } from "src/coupon/domain/model/user.coupon.status";
+
 
 @Entity('user_coupon')
 export class UserCouponEntity {
@@ -18,13 +20,13 @@ export class UserCouponEntity {
   @Column({ name: 'status', nullable: false })
   status: UserCouponStatus;
   @Column({ name: 'started_at', nullable: false })
-  startedAt: Date;
+  startedAt: string;
   @Column({ name: 'ended_at', nullable: false })
-  endedAt: Date;
+  endedAt: string;
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+  createdAt: string;
   @UpdateDateColumn({ type: 'timestamp' })
-  modifiedAt: Date;
+  modifiedAt: string;
   @VersionColumn()
   version: number;
  
@@ -33,10 +35,10 @@ export class UserCouponEntity {
     userId: string,
     couponId: string,
     status: UserCouponStatus,
-    startedAt: Date,
-    endedAt: Date,
-    createdAt: Date,
-    modifiedAt: Date,
+    startedAt: string,
+    endedAt: string,
+    createdAt: string,
+    modifiedAt: string,
     version: number,
   ) {
     this.id = id;
@@ -57,8 +59,8 @@ export class UserCouponEntity {
       userCoupon.userId.value,
       userCoupon.couponId.value,
       userCoupon.status,
-      period.startedAt,
-      period.endedAt,
+      period.startedAt.format('YYYY-MM-DD HH:mm:ss'),
+      period.endedAt.format('YYYY-MM-DD HH:mm:ss'),
       userCoupon.createdAt,
       userCoupon.modifiedAt,
       userCoupon.version
@@ -71,7 +73,7 @@ export class UserCouponEntity {
       UserId.of(this.userId),
       CouponId.of(this.id),
       this.status,
-      UserCouponPeriod.of(this.startedAt, this.endedAt),
+      UserCouponPeriod.of(moment(this.startedAt).tz('Asia/Seoul'), moment(this.endedAt).tz('Asia/Seoul')),
       this.createdAt,
       this.modifiedAt,
       this.version
