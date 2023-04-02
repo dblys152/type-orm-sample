@@ -12,8 +12,8 @@ export class UserCoupon {
   private _couponId: CouponId;
   private _status: UserCouponStatus;
   private _period: UserCouponPeriod;
-  private _createdAt: string;
-  private _modifiedAt: string;
+  private _createdAt: moment.Moment;
+  private _modifiedAt: moment.Moment;
   private _version: number;
   
   private constructor(
@@ -22,8 +22,8 @@ export class UserCoupon {
     couponId: CouponId,
     status: UserCouponStatus,
     period: UserCouponPeriod,
-    createdAt: string | null,
-    modifiedAt: string | null,
+    createdAt: moment.Moment | null,
+    modifiedAt: moment.Moment | null,
     version: number | null
   ) {
     this._id = id;
@@ -51,8 +51,8 @@ export class UserCoupon {
     couponId: CouponId,
     status: UserCouponStatus,
     period: UserCouponPeriod,
-    createdAt: string | null,
-    modifiedAt: string | null,
+    createdAt: moment.Moment | null,
+    modifiedAt: moment.Moment | null,
     version: number | null
   ): UserCoupon {
     return new UserCoupon(id, userId, couponId, status, period, createdAt, modifiedAt, version);
@@ -103,11 +103,11 @@ export class UserCoupon {
     return this._period;
   }
   
-  get createdAt(): string {
+  get createdAt(): moment.Moment {
     return this._createdAt;
   }
   
-  get modifiedAt(): string {
+  get modifiedAt(): moment.Moment {
     return this._modifiedAt;
   }
   

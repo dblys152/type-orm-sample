@@ -2,6 +2,7 @@ import { CouponId } from "./coupon.id";
 import { CouponType } from "./coupon.type";
 import { CouponDiscount } from "./coupon.discount";
 import { IdGenerator } from "../../gen/id.generator";
+import moment from "moment";
 
 export default class Coupon {
 
@@ -9,9 +10,9 @@ export default class Coupon {
     private _id: CouponId,
     private _couponType: CouponType,
     private _discount: CouponDiscount,
-    private _createdAt: Date,
-    private _modifiedAt: Date,
-    private _deletedAt: Date | null,
+    private _createdAt: moment.Moment,
+    private _modifiedAt: moment.Moment,
+    private _deletedAt: moment.Moment | null,
     private _version: number | null
   ) {}
 
@@ -27,9 +28,9 @@ export default class Coupon {
     id: CouponId,
     couponType: CouponType,
     discount: CouponDiscount,
-    createdAt: Date,
-    modifiedAt: Date,
-    deletedAt: Date | null,
+    createdAt: moment.Moment,
+    modifiedAt: moment.Moment,
+    deletedAt: moment.Moment | null,
     version: number | null
   ): Coupon {
     return new Coupon(id, couponType, discount, createdAt, modifiedAt, deletedAt, version);
@@ -47,15 +48,15 @@ export default class Coupon {
     return this._discount;
   }
 
-  get createdAt(): Date {
+  get createdAt(): moment.Moment {
     return this._createdAt;
   }
 
-  get modifiedAt(): Date {
+  get modifiedAt(): moment.Moment {
     return this._modifiedAt;
   }
 
-  get deletedAt(): Date | null {
+  get deletedAt(): moment.Moment | null {
     return this._deletedAt;
   }
 

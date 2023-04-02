@@ -1,15 +1,17 @@
 import * as moment from "moment-timezone";
-import { CouponId } from "src/domain/coupon/model/coupon.id";
-import { UserCoupon } from "src/domain/coupon/model/user.coupon";
-import { UserCouponId } from "src/domain/coupon/model/user.coupon.id";
-import { UserCouponPeriod } from "src/domain/coupon/model/user.coupon.period";
-import { UserCouponStatus } from "src/domain/coupon/model/user.coupon.status";
-import { UserId } from "src/domain/coupon/model/user.id";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { CouponId } from "../../../../domain/coupon/model/coupon.id";
+import { UserCoupon } from "../../../../domain/coupon/model/user.coupon";
+import { UserCouponId } from "../../../../domain/coupon/model/user.coupon.id";
+import { UserCouponPeriod } from "../../../../domain/coupon/model/user.coupon.period";
+import { UserCouponStatus } from "../../../../domain/coupon/model/user.coupon.status";
+import { UserId } from "../../../../domain/coupon/model/user.id";
 
 
 @Entity('user_coupon')
 export class UserCouponEntity {
+
+  private static readonly DATETIME_FORMAT: string = 'YYYY-MM-DD HH:mm:ss';
   
   @PrimaryGeneratedColumn()
   id: string;
@@ -59,10 +61,10 @@ export class UserCouponEntity {
       userCoupon.userId.value,
       userCoupon.couponId.value,
       userCoupon.status,
-      period.startedAt.format('YYYY-MM-DD HH:mm:ss'),
-      period.endedAt.format('YYYY-MM-DD HH:mm:ss'),
-      userCoupon.createdAt,
-      userCoupon.modifiedAt,
+      period.startedAt.format(this.DATETIME_FORMAT),
+      period.endedAt.format(this.DATETIME_FORMAT),
+      userCoupon.createdAt.format(this.DATETIME_FORMAT),
+      userCoupon.modifiedAt.format(this.DATETIME_FORMAT),
       userCoupon.version
     );
   }
@@ -74,8 +76,8 @@ export class UserCouponEntity {
       CouponId.of(this.id),
       this.status,
       UserCouponPeriod.of(moment(this.startedAt).tz('Asia/Seoul'), moment(this.endedAt).tz('Asia/Seoul')),
-      this.createdAt,
-      this.modifiedAt,
+      moment(this.createdAt).tz('Asia/Seoul'),
+      moment(this.modifiedAt).tz('Asia/Seoul'),
       this.version
     );
   }

@@ -1,13 +1,16 @@
-import Coupon from "src/domain/coupon/model/coupon";
-import { CouponDiscount } from "src/domain/coupon/model/coupon.discount";
-import { CouponDiscountType } from "src/domain/coupon/model/coupon.discount.type";
-import { CouponDiscountValue } from "src/domain/coupon/model/coupon.discount.value";
-import { CouponId } from "src/domain/coupon/model/coupon.id";
-import { CouponType } from "src/domain/coupon/model/coupon.type";
+import * as moment from "moment-timezone";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import Coupon from "../../../../domain/coupon/model/coupon";
+import { CouponDiscount } from "../../../../domain/coupon/model/coupon.discount";
+import { CouponDiscountType } from "../../../../domain/coupon/model/coupon.discount.type";
+import { CouponDiscountValue } from "../../../../domain/coupon/model/coupon.discount.value";
+import { CouponId } from "../../../../domain/coupon/model/coupon.id";
+import { CouponType } from "../../../../domain/coupon/model/coupon.type";
 
 @Entity('coupon')
 export class CouponEntity {
+
+  private static readonly DATETIME_FORMAT: string = 'YYYY-MM-DD HH:mm:ss';
   
   @PrimaryGeneratedColumn()
   id: string;
@@ -18,10 +21,11 @@ export class CouponEntity {
   @Column({ name: 'discount_value', nullable: false })
   discountValue: number;
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+  createdAt: string;
   @UpdateDateColumn({ type: 'timestamp' })
-  modifiedAt: Date;
-  deletedAt: Date;
+  modifiedAt: string;
+  @Column({ name: 'deleted_at', type: 'timestamp' })
+  deletedAt: string;
   @VersionColumn()
   version: number;
  
@@ -30,9 +34,9 @@ export class CouponEntity {
     couponType: CouponType,
     discountType: CouponDiscountType,
     discountValue: number,
-    createdAt: Date,
-    modifiedAt: Date,
-    deletedAt: Date,
+    createdAt: string,
+    modifiedAt: string,
+    deletedAt: string,
     version: number
   ) {
     this.id = id;
@@ -52,9 +56,9 @@ export class CouponEntity {
       coupon.couponType,
       discount.discountType,
       discount.discountValue.value,
-      coupon.createdAt,
-      coupon.modifiedAt,
-      coupon.modifiedAt,
+      coupon.createdAt ? coupon.createdAt.format(this.DATETIME_FORMAT) : null,
+      coupon.modifiedAt ? coupon.modifiedAt.format(this.DATETIME_FORMAT) : null,
+      coupon.deletedAt ? coupon.deletedAt.format(this.DATETIME_FORMAT) : null,
       coupon.version
     );
   }
@@ -64,9 +68,9 @@ export class CouponEntity {
       CouponId.of(this.id),
       this.couponType,
       CouponDiscount.of(this.discountType, CouponDiscountValue.of(this.discountValue)),
-      this.createdAt,
-      this.modifiedAt,
-      this.deletedAt,
+      moment(this.createdAt).tz('Asia/Seoul'),
+      moment(this.modifiedAt).tz('Asia/Seoul'),
+      moment(this.deletedAt).tz('Asia/Seoul'),
       this.version
     );
   }

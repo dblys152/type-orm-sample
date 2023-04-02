@@ -1,4 +1,3 @@
 export enum CouponType {
-  PERCENTAGE = 'percentage',
-  AMOUNT = 'amount',
+  PODUCT_DISCOUNT = 'PODUCT_DISCOUNT',
 }
