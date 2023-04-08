@@ -1,22 +1,15 @@
-import * as moment from 'moment-timezone';
-import { CouponId } from './coupon.id';
 import { UserCoupon } from './user.coupon';
-import { UserCouponPeriod } from './user.coupon.period';
 import { UserCouponStatus } from './user.coupon.status';
-import { UserId } from './user.id';
-
-
+import { UserCouponTestFixture } from './user.coupon.test.fixture';
 
 describe('UserCoupon', () => {
 
-  let ANY_USER_ID: UserId = UserId.of('ANY_USER_ID');
-  let ANY_COUPON_ID: CouponId = CouponId.of('ANY_COUPON_ID');
-  let ANY_PERIOD: UserCouponPeriod = UserCouponPeriod.of(moment().tz('Asia/Seoul'), moment().tz('Asia/Seoul').add(5, 'day'));
+  const {USER_ID, COUPON, USER_COUPON_PERIOD} = UserCouponTestFixture;
 
   let sut: UserCoupon;
 
   beforeEach(() => {
-    sut = UserCoupon.create(ANY_USER_ID, ANY_COUPON_ID, ANY_PERIOD);
+    sut = UserCoupon.create(USER_ID, COUPON, USER_COUPON_PERIOD);
   });
 
   describe('use', () => {

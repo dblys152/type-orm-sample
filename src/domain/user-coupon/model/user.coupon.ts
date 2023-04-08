@@ -1,5 +1,6 @@
+import Coupon from "../../coupon/model/coupon";
+import { CouponId } from "../../coupon/model/coupon.id";
 import { IdGenerator } from "../../gen/id.generator";
-import { CouponId } from "./coupon.id";
 import { UserCouponId } from "./user.coupon.id";
 import { UserCouponPeriod } from "./user.coupon.period";
 import { UserCouponStatus } from "./user.coupon.status";
@@ -9,7 +10,7 @@ export class UserCoupon {
 
   private _id: UserCouponId;
   private _userId: UserId;
-  private _couponId: CouponId;
+  private _coupon: Coupon;
   private _status: UserCouponStatus;
   private _period: UserCouponPeriod;
   private _createdAt: moment.Moment;
@@ -19,7 +20,7 @@ export class UserCoupon {
   private constructor(
     id: UserCouponId,
     userId: UserId,
-    couponId: CouponId,
+    coupon: Coupon,
     status: UserCouponStatus,
     period: UserCouponPeriod,
     createdAt: moment.Moment | null,
@@ -28,7 +29,7 @@ export class UserCoupon {
   ) {
     this._id = id;
     this._userId = userId;
-    this._couponId = couponId;
+    this._coupon = coupon;
     this._status = status;
     this._period = period;
     this._createdAt = createdAt;
@@ -38,24 +39,24 @@ export class UserCoupon {
 
   public static create(
     userId: UserId,
-    couponId: CouponId,
+    coupon: Coupon,
     period: UserCouponPeriod,
   ): UserCoupon {
     const id: UserCouponId = UserCouponId.of(new IdGenerator().generateRandomId());
-    return new UserCoupon(id, userId, couponId, UserCouponStatus.AVAILABLE, period, null, null, null);
+    return new UserCoupon(id, userId, coupon, UserCouponStatus.AVAILABLE, period, null, null, null);
   }
 
   public static of(
     id: UserCouponId,
     userId: UserId,
-    couponId: CouponId,
+    coupon: Coupon,
     status: UserCouponStatus,
     period: UserCouponPeriod,
     createdAt: moment.Moment | null,
     modifiedAt: moment.Moment | null,
     version: number | null
   ): UserCoupon {
-    return new UserCoupon(id, userId, couponId, status, period, createdAt, modifiedAt, version);
+    return new UserCoupon(id, userId, coupon, status, period, createdAt, modifiedAt, version);
   }
 
   public use() {
@@ -91,8 +92,8 @@ export class UserCoupon {
     return this._userId;
   }
   
-  get couponId(): CouponId {
-    return this._couponId;
+  get coupon(): Coupon {
+    return this._coupon;
   }
   
   get status(): UserCouponStatus {
