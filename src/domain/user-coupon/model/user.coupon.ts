@@ -4,7 +4,9 @@ import { IdGenerator } from "../../gen/id.generator";
 import { UserCouponId } from "./user.coupon.id";
 import { UserCouponPeriod } from "./user.coupon.period";
 import { UserCouponStatus } from "./user.coupon.status";
+import { UserCouponUserMembershipMapping } from "./user.coupon.user.membership.mapping";
 import { UserId } from "./user.id";
+import { UserMembershipId } from "./user.membership.id";
 
 export class UserCoupon {
 
@@ -52,9 +54,9 @@ export class UserCoupon {
     coupon: Coupon,
     status: UserCouponStatus,
     period: UserCouponPeriod,
-    createdAt: moment.Moment | null,
-    modifiedAt: moment.Moment | null,
-    version: number | null
+    createdAt: moment.Moment,
+    modifiedAt: moment.Moment,
+    version: number
   ): UserCoupon {
     return new UserCoupon(id, userId, coupon, status, period, createdAt, modifiedAt, version);
   }
@@ -82,6 +84,13 @@ export class UserCoupon {
 
   public isAvailable(): boolean {
     return this._status === UserCouponStatus.AVAILABLE;
+  }
+
+  private _useCouponUserMembershipMapping: UserCouponUserMembershipMapping;
+
+  public createUserMembershipMapping(userMembershipId: UserMembershipId): UserCouponUserMembershipMapping {
+    this._useCouponUserMembershipMapping = UserCouponUserMembershipMapping.create(this, userMembershipId);
+    return this._useCouponUserMembershipMapping;
   }
 
   get id(): UserCouponId {

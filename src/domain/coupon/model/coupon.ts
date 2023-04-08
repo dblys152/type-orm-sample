@@ -10,8 +10,8 @@ export default class Coupon {
     private _id: CouponId,
     private _couponType: CouponType,
     private _discount: CouponDiscount,
-    private _createdAt: moment.Moment,
-    private _modifiedAt: moment.Moment,
+    private _createdAt: moment.Moment | null,
+    private _modifiedAt: moment.Moment | null,
     private _deletedAt: moment.Moment | null,
     private _version: number | null
   ) {}
@@ -31,7 +31,7 @@ export default class Coupon {
     createdAt: moment.Moment,
     modifiedAt: moment.Moment,
     deletedAt: moment.Moment | null,
-    version: number | null
+    version: number
   ): Coupon {
     return new Coupon(id, couponType, discount, createdAt, modifiedAt, deletedAt, version);
   }

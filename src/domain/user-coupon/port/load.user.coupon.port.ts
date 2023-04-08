@@ -3,4 +3,5 @@ import { UserCouponId } from "../model/user.coupon.id";
 
 export interface LoadUserCouponPort {
   findById(id: UserCouponId): Promise<UserCoupon>;
+
 }
